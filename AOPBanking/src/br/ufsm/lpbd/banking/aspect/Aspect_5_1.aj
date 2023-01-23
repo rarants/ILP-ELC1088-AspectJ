@@ -3,7 +3,7 @@ package br.ufsm.lpbd.banking.aspect;
 import br.ufsm.lpbd.banking.core.Account;
 
 public aspect Aspect_5_1 {
-	pointcut saqueMaior(Account ac, float amount) : execution(* Account.debit(float)) 
+	pointcut saqueMaior(Account ac, float amount) : call(* Account.debit(float)) 
 		&& args(quant) && target(ac);
 	
 	before(Account ac, float amount): saqueMaior(ac, amount) {

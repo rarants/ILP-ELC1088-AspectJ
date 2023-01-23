@@ -17,9 +17,9 @@ import br.ufsm.lpbd.banking.exception.InsufficientBalanceException;
  * @author Cristiano de Favari
  * Universidade Federal de Santa Maria
  * 
- * Atenção : Os testes somente passam após os aspectos da lista serem implementados
+ * AtenÔøΩÔøΩo : Os testes somente passam apÔøΩs os aspectos da lista serem implementados
  *           Execute cada um dos testes a medida que os aspectos forem implementados
- *           retirando os comentários @Test dos métodos. 
+ *           retirando os comentÔøΩrios @Test dos mÔøΩtodos. 
  *  
  */
 public class BankingTest {
@@ -29,19 +29,19 @@ public class BankingTest {
 	private Customer c4;
 	
 	@Before public void setUp() {
-		c1 = new Customer("Eratóstenes de Cirenia");
+		c1 = new Customer("EratÔøΩstenes de Cirenia");
 		c2 = new Customer("Plutarco de Queroneia");
 		c3 = new Customer("Tales de Mileto");
-		c4 = new Customer("Anaxágoras de Clazômenas");
+		c4 = new Customer("AnaxÔøΩgoras de ClazÔøΩmenas");
 	}
 	
-	// Fake test - somente para não subir exceção dizendo que não existem testes para serem executados 
+	// Fake test - somente para nÔøΩo subir exceÔøΩÔøΩo dizendo que nÔøΩo existem testes para serem executados 
 	@Test public void smile() {
 		assertTrue(true);
 	}
 	
 	/**
-	 * Teste Caminho Azul : Sem violação de limites de saldo.
+	 * Teste Caminho Azul : Sem violaÔøΩÔøΩo de limites de saldo.
 	 */
 	/*@Test*/ public void bluePath() {
 		// Cria contas
@@ -54,12 +54,12 @@ public class BankingTest {
 		c1.addAccount(checkingAccount);
 		c1.addOverdraftAccount(overdraftAccount);
 		
-		// Faz alguns depósitos
+		// Faz alguns depÔøΩsitos
 		savingsAccount.credit(10000);
 		assertTrue(savingsAccount.getBalance() == 10000);
 		checkingAccount.credit(15000);
 		assertTrue(checkingAccount.getBalance() == 15000);
-		// Configura o limite de crédito
+		// Configura o limite de crÔøΩdito
 		overdraftAccount.credit(1000);
 		assertTrue(overdraftAccount.getBalance() == 1000);		
 		try {
@@ -68,12 +68,12 @@ public class BankingTest {
 			assertTrue(checkingAccount.getBalance() == 10000);
 			checkingAccount.debit(5000);
 			assertTrue(checkingAccount.getBalance() == 5000);
-			checkingAccount.debit(4900); // Deixar 100 na conta como limite de segurança.
+			checkingAccount.debit(4900); // Deixar 100 na conta como limite de seguranÔøΩa.
 			assertTrue(checkingAccount.getBalance() == 100);
 			assertTrue(overdraftAccount.getBalance() == 1000);
 			assertTrue(checkingAccount.getTaxes() == 0);
 
-			// Saque ATM na conta poupança
+			// Saque ATM na conta poupanÔøΩa
 			savingsAccount.debit(1000);
 			assertTrue(savingsAccount.getBalance() == 9000);
 			savingsAccount.debit(500);
@@ -106,9 +106,9 @@ public class BankingTest {
 	}
 
 	/**
-	 * Teste para testar empréstimos acima do permitido
+	 * Teste para testar emprÔøΩstimos acima do permitido
 	 */
-	/*@Test (expected= InsufficientBalanceException.class)*/ public void ExceedLoan() throws InsufficientBalanceException {
+	@Test (expected= InsufficientBalanceException.class) public void ExceedLoan() throws InsufficientBalanceException {
 		Account savingsAccount = new SavingsAccountSimpleImpl(100, c2);
 		Account checkingAccount = new CheckingAccountSimpleImpl(101, c2);
 		Account overdraftAccount = new OverdraftAccountSimpleImpl(666, c2);
@@ -125,7 +125,7 @@ public class BankingTest {
 		checkingAccount.debit(2000); // sinaliza InsufficientBalanceException
 	}
 
-	/*@Test (expected= InsufficientBalanceException.class)*/ public void safetyBalanceRule() throws InsufficientBalanceException {
+	@Test (expected= InsufficientBalanceException.class) public void safetyBalanceRule() throws InsufficientBalanceException {
 		Account savingsAccount = new SavingsAccountSimpleImpl(100, c3);
 		Account checkingAccount = new CheckingAccountSimpleImpl(101, c3);
 		Account overdraftAccount = new OverdraftAccountSimpleImpl(666, c3);
@@ -139,11 +139,11 @@ public class BankingTest {
 		checkingAccount.debit(14000);
 		assertTrue(checkingAccount.getBalance() == 1000);
 		checkingAccount.debit(950); 
-		// sinaliza InsufficientBalanceException ja que não há saldo de empréstimo e o limite de segurança é 100,00 		
+		// sinaliza InsufficientBalanceException ja que nÔøΩo hÔøΩ saldo de emprÔøΩstimo e o limite de seguranÔøΩa ÔøΩ 100,00 		
 		
 	}
 
-	/*@Test*/ public void taxRule() throws InsufficientBalanceException {
+	@Test public void taxRule() throws InsufficientBalanceException {
 		Account savingsAccount = new SavingsAccountSimpleImpl(104, c4);
 		Account checkingAccount = new CheckingAccountSimpleImpl(204, c4);
 		Account overdraftAccount = new OverdraftAccountSimpleImpl(304, c4);
@@ -155,7 +155,7 @@ public class BankingTest {
 		overdraftAccount.credit(1000);
 		
 		// Descontou cheque maior que saldo da conta
-		// Emprestou 500(excedente) + 100 de limite de segurança
+		// Emprestou 500(excedente) + 100 de limite de seguranÔøΩa
 		CheckClearenceSystem.debit(savingsAccount, 10500);
 		// Saldo fica em 100
 		assertTrue(savingsAccount.getBalance() == 100); 
